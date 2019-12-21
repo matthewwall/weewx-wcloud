@@ -1,0 +1,39 @@
+0.12 07mar2019
+* Ported to Python 3. Use more modern restx framework.
+* Import ExtensionInstaller from weecfg.extension.
+
+0.11 15aug2017
+* fixed EV/ET typo
+
+0.10 28dec2015
+* check for windDir
+
+0.9 14oct2015
+* update readme with weewx 3.x instructions
+
+0.8 24jul2015
+* obfuscate key in logs
+
+0.7 06dec2014
+* update to weewx v3
+
+0.6
+* deal with None values for battery status
+* avoid unnecessary units query
+* added date field
+
+0.5 22oct2014
+* fixed windchill and heatindex calculations for databases with US units
+
+0.4 21oct2014
+* use UTC instead of local time
+
+0.3 20oct2014
+* disable thw until we determine a proper algorithm for it
+
+0.2 19oct2014
+* added fields for all weewx variables in default schema
+* added derived variables
+
+0.1 15oct2014
+* initial release as packaged weewx extension
