@@ -10,7 +10,7 @@ def loader():
 class WeatherCloudInstaller(ExtensionInstaller):
     def __init__(self):
         super(WeatherCloudInstaller, self).__init__(
-            version="0.11",
+            version="0.12",
             name='wcloud',
             description='Upload weather data to WeatherCloud.',
             author="Matthew Wall",
