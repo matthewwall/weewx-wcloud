@@ -33,7 +33,6 @@ Minimal Configuration:
 
 import re
 import sys
-import syslog
 import time
 
 try:
@@ -63,23 +62,43 @@ import weewx.units
 import weewx.wxformulas
 from weeutil.weeutil import to_bool
 
-VERSION = "0.12"
+VERSION = "0.13"
 
 if weewx.__version__ < "3":
     raise weewx.UnsupportedFeature("weewx 3 is required, found %s" %
                                    weewx.__version__)
 
-def logmsg(level, msg):
-    syslog.syslog(level, 'restx: WeatherCloud: %s' % msg)
+try:
+    # Test for new-style weewx logging by trying to import weeutil.logger
+    import weeutil.logger
+    import logging
+    log = logging.getLogger(__name__)
 
-def logdbg(msg):
-    logmsg(syslog.LOG_DEBUG, msg)
+    def logdbg(msg):
+        log.debug(msg)
 
-def loginf(msg):
-    logmsg(syslog.LOG_INFO, msg)
+    def loginf(msg):
+        log.info(msg)
 
-def logerr(msg):
-    logmsg(syslog.LOG_ERR, msg)
+    def logerr(msg):
+        log.error(msg)
+
+except ImportError:
+    # Old-style weewx logging
+    import syslog
+
+    def logmsg(level, msg):
+        syslog.syslog(level, 'wcloud: %s:' % msg)
+
+    def logdbg(msg):
+        logmsg(syslog.LOG_DEBUG, msg)
+
+    def loginf(msg):
+        logmsg(syslog.LOG_INFO, msg)
+
+    def logerr(msg):
+        logmsg(syslog.LOG_ERR, msg)
+
 
 # weewx uses a status of 1 to indicate failure, wcloud uses 0
 def _invert(x):
@@ -127,6 +146,7 @@ def _get_windhi(dbm, ts, interval=600):
  WHERE dateTime>? AND dateTime<=?""" % dbm.table_name, (sts, ts))
     return val[0] if val is not None else None
 
+# TODO: this is wrong. We want the *geometric* average, not the arithmetic average.
 def _get_winddiravg(dbm, ts, interval=600):
     sts = ts - interval
     val = dbm.getSql("SELECT AVG(windDir) FROM %s "

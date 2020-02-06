@@ -1,3 +1,6 @@
+0.13 05feb2020
+* Ported to WeeWX V4.
+
 0.12 07mar2019
 * Ported to Python 3. Use more modern restx framework.
 * Import ExtensionInstaller from weecfg.extension.
