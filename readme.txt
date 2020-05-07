@@ -3,9 +3,13 @@ Copyright 2014 Matthew Wall
 
 Installation instructions:
 
+0) download
+
+wget -O weewx-wcloud.zip https://github.com/matthewwall/weewx-wcloud/archive/master.zip
+
 1) run the extension installer:
 
-wee_extension --install weewx-wcloud.tgz
+wee_extension --install weewx-wcloud.zip
 
 2) modify weewx.conf:
 
